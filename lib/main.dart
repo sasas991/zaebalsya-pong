@@ -72,12 +72,10 @@ class _PongGameState extends State<PongGame> with SingleTickerProviderStateMixin
     precacheImage(const AssetImage('assets/ball.png'), context);
   }
 
-  void _init(double w, double h) {
+  void _init() {
     if (_ready) return;
-    _width = w;
-    _height = h;
-    _p1y = h / 2;
-    _p2y = h / 2;
+    _p1y = _height / 2;
+    _p2y = _height / 2;
     _launchBall();
     _ready = true;
     _ticker.start();
@@ -212,8 +210,12 @@ class _PongGameState extends State<PongGame> with SingleTickerProviderStateMixin
         builder: (_, constraints) {
           final w = constraints.maxWidth;
           final h = constraints.maxHeight;
-          if (!_ready && w > 0 && h > 0) {
-            WidgetsBinding.instance.addPostFrameCallback((_) => _init(w, h));
+          // Always sync so _init and rendering use the latest dimensions
+          _width = w;
+          _height = h;
+          // Only init once the screen has settled into landscape
+          if (!_ready && w > h && w > 0) {
+            WidgetsBinding.instance.addPostFrameCallback((_) => _init());
           }
 
           if (!_ready) return const SizedBox.expand();
