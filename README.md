@@ -1,6 +1,10 @@
 # 🏓 zaebalsya-pong
 
+![Banner](banner.png)
+
 A two-player Pong game built with Flutter, designed for Android.
+
+![Screenshot](screenshot.png)
 
 ---
 
