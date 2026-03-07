@@ -8,84 +8,77 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          // Dashed center line
-          Positioned.fill(child: CustomPaint(painter: _MenuLinePainter())),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final h = constraints.maxHeight;
+          final bannerH = h * 0.42;
+          final subSize = h * 0.038;
+          final gap = h * 0.08;
+          final labelSize = h * 0.055;
 
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset('assets/banner.png', width: 350, height: 200),
-                const Text(
-                  'ZAEBALSYA',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 80,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 16,
-                  ),
-                ),
-                const Text(
-                  'PONG',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 80,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 16,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  '2 PLAYERS',
-                  style: TextStyle(
-                    color: Colors.white38,
-                    fontSize: 16,
-                    letterSpacing: 6,
-                  ),
-                ),
-                const SizedBox(height: 72),
-                _MenuButton(
-                  label: 'PLAY',
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => const PongGame()),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
+          return Stack(
+            children: [
+              // Dashed center line
+              Positioned.fill(child: CustomPaint(painter: _MenuLinePainter())),
 
-          // Player side labels
-          const Positioned(
-            bottom: 24,
-            left: 32,
-            child: Text(
-              'P1\nLeft side',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white24,
-                fontSize: 13,
-                height: 1.6,
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset('assets/banner.png', height: bannerH),
+                    SizedBox(height: h * 0.02),
+                    Text(
+                      '2 PLAYERS',
+                      style: TextStyle(
+                        color: Colors.white38,
+                        fontSize: subSize,
+                        letterSpacing: subSize * 0.35,
+                      ),
+                    ),
+                    SizedBox(height: gap),
+                    _MenuButton(
+                      label: 'START',
+                      fontSize: labelSize,
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (_) => const PongGame()),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-          const Positioned(
-            bottom: 24,
-            right: 32,
-            child: Text(
-              'P2\nRight side',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white24,
-                fontSize: 13,
-                height: 1.6,
+
+              // Player side labels
+              Positioned(
+                bottom: h * 0.06,
+                left: h * 0.08,
+                child: Text(
+                  'P1\nLeft side',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white24,
+                    fontSize: h * 0.045,
+                    height: 1.6,
+                  ),
+                ),
               ),
-            ),
-          ),
-        ],
+              Positioned(
+                bottom: h * 0.06,
+                right: h * 0.08,
+                child: Text(
+                  'P2\nRight side',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white24,
+                    fontSize: h * 0.045,
+                    height: 1.6,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -94,8 +87,13 @@ class MainMenu extends StatelessWidget {
 class _MenuButton extends StatefulWidget {
   final String label;
   final VoidCallback onTap;
+  final double fontSize;
 
-  const _MenuButton({required this.label, required this.onTap});
+  const _MenuButton({
+    required this.label,
+    required this.onTap,
+    required this.fontSize,
+  });
 
   @override
   State<_MenuButton> createState() => _MenuButtonState();
@@ -125,7 +123,7 @@ class _MenuButtonState extends State<_MenuButton> {
           widget.label,
           style: TextStyle(
             color: _pressed ? Colors.black : Colors.white,
-            fontSize: 22,
+            fontSize: widget.fontSize,
             fontWeight: FontWeight.bold,
             letterSpacing: 8,
           ),
