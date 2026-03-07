@@ -17,6 +17,7 @@ class MainMenu extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Image.asset('assets/banner.png', width: 350, height: 200),
                 const Text(
                   'ZAEBALSYA',
                   style: TextStyle(
