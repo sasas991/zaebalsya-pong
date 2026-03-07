@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'menu.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ class PongApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Pong',
       debugShowCheckedModeBanner: false,
-      home: PongGame(),
+      home: MainMenu(),
     );
   }
 }
